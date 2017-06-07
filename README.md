@@ -1,12 +1,11 @@
 # express-proxy-middleware
 
-抽离 [webpack-dev-server](https://github.com/webpack/webpack-dev-server) 中的代理功能作为一个中间件
-方便传入一个path, 或者proxy对象来生成express中间件.
+提取 [webpack-dev-server](https://github.com/webpack/webpack-dev-server) 中的代理功能作为一个中间件
+方便传入一个path, 或者含有proxy属性的对象来生成express中间件.
 
 ## 配置
-支持webpack-dev-server配置中的 [proxy](https://webpack.js.org/configuration/dev-server/#devserver-proxy) 配置规则.
 
-## 使用
+支持webpack-dev-server配置中的 [proxy](https://webpack.js.org/configuration/dev-server/#devserver-proxy) 配置规则.
 
 - 安装
 
@@ -14,14 +13,16 @@
 npm install express-proxy-middleware
 ```
 
-- 配置文件
+## 使用
 
-参考 
+参数支持传入一个配置对象或包含配置对象的配置文件路径, 路径支持绝对路径或相对路径.
+
+- 配置文件参考 
 
 ```javascript
-// 如 proxy.config.js, 文件名不限 
+// 如配置文件为 proxy.config.js
 module.exports = {
-    'proxy': {
+    proxy: {
         '/proxy1': {
             'target': 'http://localhost:9000'
         },
@@ -42,7 +43,33 @@ module.exports = {
 
 ```
 
-## 使用
+- 配置对象参考
+
+```javascript
+const proxyConfig = {
+     proxy: {
+         '/proxy1': {
+             'target': 'http://localhost:9000'
+         },
+         '/api/proxy2': {
+             'target': 'http://localhost:9001',
+             'pathRewrite': { '^/api': '' }
+         },
+         '/foo': {
+             target: 'http://localhost:9001',
+             'bypass': function(req) {
+                 if (/\.html$/.test(req.path)) {
+                     return '/foo/a/index.html';
+                 }
+             }
+         }
+     }
+ };
+                     
+```
+
+
+配置对象需要包含proxy属性. 
 
 ```javascript
 const express = require('express');

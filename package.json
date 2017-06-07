@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "xuzhichao",
   "license": "MIT",
+  "repository": "https://github.com/xu3927/express-proxy-middleware",
   "scripts": {
     "test": "mocha"
   },
