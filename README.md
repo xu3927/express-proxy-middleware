@@ -9,3 +9,7 @@
 ## 参考
 
 转发功能采用 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 库实现
+
+## 其他
+
+开发node版本 6.5.0
