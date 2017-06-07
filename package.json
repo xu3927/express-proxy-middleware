@@ -1,0 +1,21 @@
+{
+  "name": "express-proxy-middleware",
+  "version": "1.0.0",
+  "description": "express proxy middleware",
+  "main": "index.js",
+  "author": "xuzhichao",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "chai": "^4.0.1",
+    "express": "^4.15.3",
+    "http-proxy-middleware": "^0.17.4",
+    "log": "^1.4.0",
+    "mocha": "^3.4.2",
+    "request": "^2.81.0",
+    "supertest": "^3.0.0",
+    "ws": "^3.0.0"
+  }
+}
