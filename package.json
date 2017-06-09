@@ -1,6 +1,6 @@
 {
   "name": "express-proxy-middleware",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "express proxy middleware",
   "main": "index.js",
   "author": "xuzhichao",
@@ -16,7 +16,6 @@
     "log": "^1.4.0",
     "mocha": "^3.4.2",
     "request": "^2.81.0",
-    "supertest": "^3.0.0",
-    "ws": "^3.0.0"
+    "supertest": "^3.0.0"
   }
 }

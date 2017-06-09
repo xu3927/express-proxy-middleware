@@ -9,7 +9,14 @@ function getProxyConfig (param) {
     let config = {};
     const errMsg = '没有找到proxy配置';
     if (typeof param === 'string') {
-        config = require(param);
+        try {
+            if (!path.isAbsolute(param)) {
+                param = path.resolve(process.cwd(), param);
+            }
+            config = require(path.resolve(param));
+        } catch (err) {
+            log.error('读取配置文件失败');
+        }
     } else if (typeof param === 'object') {
         config = param.proxy;
     }
@@ -90,7 +97,8 @@ function getMiddlewareList (proxyConfig) {
 }
 function initialization (param) {
     let config = getProxyConfig(param);
-    return middlewarelist = getMiddlewareList(config);
+    middlewarelist = getMiddlewareList(config);
+    return middlewarelist;
 }
 
 
