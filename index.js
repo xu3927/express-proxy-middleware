@@ -103,6 +103,7 @@ function initialization (param) {
         }
     } catch (err) {
         log.error('读取proxy对象失败');
+        return;
     }
     middlewarelist = getMiddlewareList(config);
     return middlewarelist;
