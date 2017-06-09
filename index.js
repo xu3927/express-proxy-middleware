@@ -7,7 +7,6 @@ const log = new Log('info');
 function getProxyConfig (param) {
     let proxyConfig;
     let config = {};
-    const errMsg = '没有找到proxy配置';
     if (typeof param === 'string') {
         try {
             if (!path.isAbsolute(param)) {
@@ -23,7 +22,7 @@ function getProxyConfig (param) {
     if (config.proxy) {
         proxyConfig = config.proxy;
     } else {
-        log.error(errMsg);
+        log.error('没有找到proxy配置');
     }
     return proxyConfig;
 }
@@ -96,7 +95,15 @@ function getMiddlewareList (proxyConfig) {
     return middlewareList;
 }
 function initialization (param) {
-    let config = getProxyConfig(param);
+    let config;
+    try {
+        config = getProxyConfig(param);
+        if (typeof config !== 'undefined') {
+            throw new Error('读取proxy对象失败');
+        }
+    } catch (err) {
+        log.error('读取proxy对象失败');
+    }
     middlewarelist = getMiddlewareList(config);
     return middlewarelist;
 }
