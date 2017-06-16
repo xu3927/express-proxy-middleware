@@ -3,6 +3,13 @@ const fs = require('fs');
 const path = require('path');
 const Log = require('log');
 const log = new Log('info');
+const errMsg1 = '读取配置文件失败';
+const errMsg2 = '未找到proxy配置';
+
+
+const blankMiddleware = function (req, res, next) {
+    next();
+}
 
 function getProxyConfig (param) {
     let proxyConfig;
@@ -14,7 +21,7 @@ function getProxyConfig (param) {
             }
             config = require(path.resolve(param));
         } catch (err) {
-            log.error('读取配置文件失败');
+            log.error(errMsg1);
         }
     } else if (typeof param === 'object') {
         config = param.proxy;
@@ -22,7 +29,7 @@ function getProxyConfig (param) {
     if (config.proxy) {
         proxyConfig = config.proxy;
     } else {
-        log.error('没有找到proxy配置');
+        log.error(errMsg2);
     }
     return proxyConfig;
 }
@@ -99,18 +106,23 @@ function initialization (param) {
     try {
         config = getProxyConfig(param);
         if (typeof config !== 'undefined') {
-            throw new Error('读取proxy对象失败');
+            throw new Error(errMsg2);
         }
     } catch (err) {
-        log.error('读取proxy对象失败');
-        return;
+        log.info(errMsg2);
+        return blankMiddleware;
     }
     middlewarelist = getMiddlewareList(config);
     return middlewarelist;
 }
 
 
+
 module.exports = function (param) {
+    if (!param) {
+        log.info(errMsg2);
+        return blankMiddleware;
+    };
     let middlewarelist = initialization(param);
     return middlewarelist;
 }
