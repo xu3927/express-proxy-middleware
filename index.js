@@ -2,7 +2,7 @@ const httpProxyMiddleware = require("http-proxy-middleware");
 const fs = require('fs');
 const path = require('path');
 const Log = require('log');
-const log = new Log('info');
+const log = new Log();
 const errMsg1 = '读取配置文件失败';
 const errMsg2 = '未找到proxy配置';
 
@@ -105,7 +105,7 @@ function initialization (param) {
     let config;
     try {
         config = getProxyConfig(param);
-        if (typeof config !== 'undefined') {
+        if (typeof config === 'undefined' || Object.keys(config).length <= 0) {
             throw new Error(errMsg2);
         }
     } catch (err) {
