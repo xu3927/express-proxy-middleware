@@ -1,9 +1,6 @@
 const path = require('path');
 const express = require('express');
-const chai = require('chai');
-const expect = chai.expect;
 const ProxyMiddleware = require('../main.js');
-const request = require('supertest');
 
 function startProxyServers () {
     const listeners = [];
@@ -31,7 +28,7 @@ function startProxyServers () {
     }
     return function closeProxyServers () {
         listeners.forEach(_listener => {
-           _listener.close();
+            _listener.close();
         });
     }
 }
@@ -58,43 +55,9 @@ function startHttpServer (dir) {
     }
 }
 
-describe('读取配置文件', function () {
-    it('生成代理中间件数组', function () {
-        let res = ProxyMiddleware(path.resolve(__dirname, './proxyConfig.js'));
-        expect(res instanceof Array).to.be.ok;
-    })
-});
-describe('测试代理功能', function () {
-    let closeProxyServers;
-    let httpServer;
-    let req;
-    before(function () {
-        closeProxyServers = startProxyServers();
-        httpServer = startHttpServer('./proxyConfig.js');
-        req = request(httpServer.server);
-    });
-    after(function () {
-        closeProxyServers();
-        httpServer.close();
-    });
-    describe('target', function () {
-        it('测试proxy的target转发功能', function (done) {
-           req
-               .get('/proxy1')
-               .expect(200, 'from proxy1', done);
-        });
-    });
-    describe('pathRewrite', function () {
-        it('测试proxy的pathRewrite', done => {
-            req.get('/api/proxy2')
-                .expect(200, 'from proxy2', done)
-        });
-    });
-    describe('bypass', function () {
-        it('测试proxy的bypass', done => {
-            req.get('/foo/index.html')
-                .expect(200, 'bypass url', done)
-        });
-    });
+function initialization () {
+    startProxyServers();
+    startHttpServer();
+}
 
-});
+initialization();

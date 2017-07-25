@@ -7,7 +7,26 @@
   "license": "MIT",
   "repository": "https://github.com/xu3927/express-proxy-middleware",
   "scripts": {
-    "test": "mocha"
+    "prepublish": "npm run build",
+    "test": "mocha",
+    "build": "babel src -d build"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "4.0"
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      [
+        "transform-runtime"
+      ]
+    ]
   },
   "dependencies": {
     "chai": "^4.0.1",
@@ -17,5 +36,12 @@
     "mocha": "^3.4.2",
     "request": "^2.81.0",
     "supertest": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-register": "^6.24.1"
   }
 }

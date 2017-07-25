@@ -10,7 +10,13 @@ const errMsg2 = '未找到proxy配置';
 const blankMiddleware = function (req, res, next) {
     next();
 }
-
+function setDefaultFields (options) {
+    const defaultFields = {
+        changeOrigin: true,
+        autoRewrite: true
+    };
+    Object.assign(options, defaultFields);
+}
 function getProxyConfig (param) {
     let proxyConfig;
     let config = {};
@@ -50,7 +56,7 @@ function getMiddlewareList (proxyConfig) {
                 proxyOptions = Object.assign({}, proxyConfig[context]);
                 proxyOptions.context = correctedContext;
             }
-
+            setDefaultFields(proxyOptions);
             return proxyOptions;
         });
     }
@@ -112,8 +118,7 @@ function initialization (param) {
         log.info(errMsg2);
         return blankMiddleware;
     }
-    middlewarelist = getMiddlewareList(config);
-    return middlewarelist;
+    return getMiddlewareList(config);
 }
 
 
