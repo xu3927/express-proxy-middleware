@@ -24,7 +24,15 @@ npm install express-proxy-middleware
 module.exports = {
     proxy: {
         '/proxy1': {
-            'target': 'http://localhost:9000'
+            // 目标地址, 必须带完整的协议(如 http:// 或 https://)
+            'target': 'http://localhost:9000',
+            // 设置请求header
+            'headers': {
+                // 转发的请求携带的cookie
+                cookie: 'id=abcdefg;',
+                // 请求头host字段, 该字段不需要带协议
+                host: 'localhost'
+            }
         },
         '/api/proxy2': {
             'target': 'http://localhost:9001',
