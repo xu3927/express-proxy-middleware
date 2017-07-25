@@ -1,13 +1,13 @@
 {
   "name": "express-proxy-middleware",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "express proxy middleware",
   "main": "index.js",
   "author": "xuzhichao",
   "license": "MIT",
   "repository": "https://github.com/xu3927/express-proxy-middleware",
   "scripts": {
-    "prepublish": "npm run build",
+    "prepublish": "npm run build; git commit -am pub; git push;",
     "test": "mocha",
     "build": "babel src -d build"
   },
