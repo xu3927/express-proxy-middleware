@@ -1,8 +1,8 @@
 {
   "name": "express-proxy-middleware",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "express proxy middleware",
-  "main": "index.js",
+  "main": "main.js",
   "author": "xuzhichao",
   "license": "MIT",
   "repository": "https://github.com/xu3927/express-proxy-middleware",
