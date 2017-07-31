@@ -1,7 +1,8 @@
 module.exports = {
     'proxy': {
         '/proxy1': {
-            'target': 'http://localhost:9000'
+            'target': 'http://localhost:9000',
+            debug: true
         },
         '/api/proxy2': {
             'target': 'http://localhost:9001',
@@ -15,6 +16,5 @@ module.exports = {
                 }
             }
         }
-    },
-    debug: true
+    }
 }

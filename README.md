@@ -26,6 +26,8 @@ module.exports = {
         '/proxy1': {
             // 目标地址, 必须带完整的协议(如 http:// 或 https://)
             'target': 'http://localhost:9000',
+             // whether to print Http headers. default false
+             debug: false
             // 设置请求header
             'headers': {
                 // 转发的请求携带的cookie
@@ -57,7 +59,9 @@ module.exports = {
 const proxyConfig = {
      proxy: {
          '/proxy1': {
-             'target': 'http://localhost:9000'
+             'target': 'http://localhost:9000',
+             // whether to print Http headers. default false
+             debug: false
          },
          '/api/proxy2': {
              'target': 'http://localhost:9001',
