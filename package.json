@@ -1,6 +1,6 @@
 {
   "name": "express-proxy-middleware",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "express proxy middleware",
   "main": "main.js",
   "author": "xuzhichao",

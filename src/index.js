@@ -10,11 +10,30 @@ const errMsg2 = '未找到proxy配置';
 const blankMiddleware = function (req, res, next) {
     next();
 }
-function setDefaultFields (options) {
+function setDefaultFields (options, isDebug) {
+    isDebug = typeof isDebug === 'undefined' ? false : isDebug;
     const defaultFields = {
         changeOrigin: true,
         autoRewrite: true
     };
+    const debugFields = {
+        onError (err, req, res) {
+            log.error('Error:', err);
+        },
+        onProxyReq (proxyReq, req, res) {
+            console.log('----proxyRequestHeaders----');
+            console.log(req.method, req.url);
+            console.log(proxyReq._headers);
+        },
+        onProxyRes (proxyRes, req, res) {
+            console.log('----proxyResponseHeaders----');
+            console.log(req.method, req.url);
+            console.log(proxyRes.headers);
+        }
+    };
+    if (isDebug) {
+        Object.assign(defaultFields, debugFields);
+    }
     Object.assign(options, defaultFields);
 }
 function getProxyConfig (param) {
@@ -25,6 +44,7 @@ function getProxyConfig (param) {
             if (!path.isAbsolute(param)) {
                 param = path.resolve(process.cwd(), param);
             }
+            delete require.cache[path.resolve(param)];
             config = require(path.resolve(param));
         } catch (err) {
             log.error(errMsg1);
@@ -56,7 +76,7 @@ function getMiddlewareList (proxyConfig) {
                 proxyOptions = Object.assign({}, proxyConfig[context]);
                 proxyOptions.context = correctedContext;
             }
-            setDefaultFields(proxyOptions);
+            setDefaultFields(proxyOptions, proxyConfig.debug);
             return proxyOptions;
         });
     }
