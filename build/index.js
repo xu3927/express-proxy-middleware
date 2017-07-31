@@ -21,8 +21,8 @@ var errMsg2 = '未找到proxy配置';
 var blankMiddleware = function blankMiddleware(req, res, next) {
     next();
 };
-function setDefaultFields(options, isDebug) {
-    isDebug = typeof isDebug === 'undefined' ? false : isDebug;
+function setDefaultFields(options) {
+    var isDebug = typeof options.debug === 'undefined' ? false : options.debug;
     var defaultFields = {
         changeOrigin: true,
         autoRewrite: true
@@ -87,7 +87,7 @@ function getMiddlewareList(proxyConfig) {
                 proxyOptions = (0, _assign2.default)({}, proxyConfig[context]);
                 proxyOptions.context = correctedContext;
             }
-            setDefaultFields(proxyOptions, proxyConfig.debug);
+            setDefaultFields(proxyOptions);
             return proxyOptions;
         });
     }
